@@ -8,7 +8,7 @@ import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
-
+import adminRoutes from './routes/adminRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -17,7 +17,9 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // frontend URL
+}));
 
 
 // Stripe webhook route BEFORE express.json
@@ -28,6 +30,7 @@ app.use(
 
 app.use(express.json());
 
+app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
